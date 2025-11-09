@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone 17 Pro Max</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --apple-blue: #007AFF;
+            --apple-dark: #1D1D1F;
+            --apple-gray: #F5F5F7;
+            --apple-gradient: linear-gradient(135deg, #000000 0%, #1D1D1F 50%, #000000 100%);
+        }
+        
+        body {
+            font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--apple-gradient);
+            color: white;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /*Navbar */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 85%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.4s ease;
+            padding: 12px 20px;
+        }
+
+        .navbar.scrolled {
+            width: 95%;
+            top: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(25px);
+        }
+
+        .navbar-brand {
+            color: white;
+            font-weight: 700;
+            margin-right: 30px;
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            margin: 0 8px;
+            padding: 8px 16px !important;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: white;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /*Video Hero Section */
+        .hero-video-container {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 2;
+            width: 80%;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to right, #fff 0%, #66ccff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /*Scroll Down Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            color: white;
+            text-align: center;
+        }
+
+        .scroll-indicator .arrow {
+            display: block;
+            width: 30px;
+            height: 30px;
+            border-right: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(45deg);
+            margin: 0 auto;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: rotate(45deg) translateY(0);
+            }
+            40% {
+                transform: rotate(45deg) translateY(-10px);
+            }
+            60% {
+                transform: rotate(45deg) translateY(-5px);
+            }
+        }
+
+        /*Fade-In Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-in-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /*Video Showcase Section */
+        .video-showcase {
+            padding: 120px 0;
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 122, 255, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .video-showcase h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-container {
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 1;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .video-container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 122, 255, 0.3);
+        }
+
+        /*Carousel Section */
+        .carousel-section {
+            padding: 120px 0;
+            background: linear-gradient(to bottom, #000000 0%, #0a0a0a 100%);
+            position: relative;
+        }
+
+        .carousel-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 80% 20%, rgba(102, 204, 255, 0.05) 0%, transparent 50%);
+        }
+
+        .carousel-section h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        #iphoneCarousel {
+            max-width: 75%;
+            margin: 0 auto;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-item img {
+            border-radius: 30px;
+            height: 600px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-control-prev, .carousel-control-next {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-control-prev {
+            left: 30px;
+        }
+
+        .carousel-control-next {
+            right: 30px;
+        }
+
+        .carousel-control-prev:hover, .carousel-control-next:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /*Specs Section */
+        .specs {
+            padding: 150px 0;
+            background: linear-gradient(to bottom, #0a0a0a 0%, #000000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .specs::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 80%, rgba(102, 204, 255, 0.05) 0%, transparent 50%);
+        }
+
+        .specs h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .spec-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spec-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(102, 204, 255, 0.3);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .spec-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #66ccff;
+        }
+
+        .spec-card h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .spec-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .spec-highlight {
+            color: #66ccff;
+            font-weight: 600;
+        }
+
+        /*Color Selector Section */
+        .color-selector-section {
+            padding: 80px 0;
+            background: linear-gradient(to bottom, #000000 0%, #0a0a0a 100%);
+            position: relative;
+        }
+
+        .color-selector-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 70%, rgba(102, 204, 255, 0.05) 0%, transparent 50%);
+        }
+
+        .color-selector-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .color-selector-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .color-selector-header h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #fff 0%, #66ccff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .color-selector-header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .color-selector-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .color-image-container {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .color-image {
+            max-width: 100%;
+            height: 500px;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+            border-radius: 25px;
+        }
+
+        .color-image:hover {
+            transform: scale(1.05);
+        }
+
+        .color-options {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .color-options h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .color-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .color-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            color: white;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+
+        .color-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .color-btn.active {
+            border-color: #66ccff;
+            background: rgba(102, 204, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(102, 204, 255, 0.2);
+        }
+
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .color-name {
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /*Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px 0 30px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #66ccff;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        /*Button Styling */
+        .btn-apple {
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+            border: none;
+            padding: 14px 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-apple:hover {
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-outline-apple {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-apple:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #fff 0%, #66ccff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+            
+            .section-header h2, .video-showcase h2, .carousel-section h2, .specs h2, .color-selector-header h2 {
+                font-size: 2.8rem;
+            }
+            
+            #iphoneCarousel {
+                max-width: 90%;
+            }
+            
+            .carousel-item img {
+                height: 450px;
+            }
+            
+            .color-image {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                width: 90%;
+                padding: 10px 15px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+            
+            .section-header h2, .video-showcase h2, .carousel-section h2, .specs h2, .color-selector-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .carousel-item img {
+                height: 350px;
+            }
+            
+            .color-image {
+                height: 300px;
+            }
+            
+            .color-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!--Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="fab fa-apple me-2"></i>iPhone 17 Pro Max</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#showcase">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#carousel">Design</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#color-selector">Colors</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#specs">Specs</a></li>
+                    <li class="nav-item"><a class="nav-link btn-outline-apple ms-2" href="#">Pre-order</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--Video Section -->
+    <div id="home" class="hero-video-container">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="videos/iphone-17-pro.mp4" type="video/mp4">
+            
+            <img src="https://www.apple.com/newsroom/images/product/iphone/standard/Apple_iPhone_15_Pro_iPhone_15_Pro_Max_hero_230912.jpg.landing-big_2x.jpg" alt="iPhone 17 Pro Max" style="width: 100%; height: 100%; object-fit: cover;">
+        </video>
+        <div class="video-overlay"></div>
+        <div class="hero-content">
+            <h1>iPhone 17 Pro Max</h1>
+            <p>The ultimate smartphone experience. Revolutionary power meets exquisite design.</p>
+            <a href="#color-selector" class="btn btn-apple btn-lg me-3">Explore Colors</a>
+            <a href="#" class="btn btn-outline-apple btn-lg">Pre-order Now</a>
+        </div>
+        <div class="scroll-indicator">
+            <span class="arrow"></span>
+        </div>
+    </div>
+
+    <!--Video Showcase Section -->
+    <section id="showcase" class="video-showcase text-center fade-in">
+        <div class="container">
+            <div class="section-header">
+                <h2>Experience the Power</h2>
+                <p>Witness the revolutionary performance and cutting-edge technology of iPhone 17 Pro Max</p>
+            </div>
+            <div class="video-container">
+                <div class="ratio ratio-16x9">
+                    <video autoplay muted loop playsinline>
+                        <source src="videos/iphone.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Carousel Section -->
+    <section id="carousel" class="carousel-section text-center fade-in">
+        <div class="container">
+            <div class="section-header">
+                <h2>Exquisite Design</h2>
+                <p>Crafted with premium materials and attention to every detail</p>
+            </div>
+            <div id="iphoneCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img
+                            src="images/1.jpg"
+                            class="d-block w-100" alt="iPhone 17 Pro Max - Front">
+                    </div>
+                    <div class="carousel-item">
+                        <img
+                            src="images/2.jpg"
+                            class="d-block w-100" alt="iPhone 17 Pro Max - Blue Titanium">
+                    </div>
+                    <div class="carousel-item">
+                        <img
+                            src="images/3.jpg"
+                            class="d-block w-100" alt="iPhone 17 Pro Max - Black Titanium">
+                    </div>
+                    <div class="carousel-item">
+                        <img
+                            src="images/4.jpg"
+                            class="d-block w-100" alt="iPhone 17 Pro Max - White Titanium">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button"
+                    data-bs-target="#iphoneCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button"
+                    data-bs-target="#iphoneCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!--Color Selector Section -->
+    <section id="color-selector" class="color-selector-section fade-in">
+        <div class="container">
+            <div class="color-selector-header">
+                <h2>Choose Your Finish</h2>
+                <p>Select from our premium titanium finishes, each with a unique personality</p>
+            </div>
+            <div class="color-selector-content">
+                <div class="color-image-container">
+                    <img id="color-image" src="images/1.jpg" 
+                         alt="iPhone 17 Pro Max" class="color-image">
+                </div>
+                <div class="color-options">
+                    <h3>Available Colors</h3>
+                    <div class="color-buttons">
+                        <div class="color-btn active" data-color="natural" data-image="images/cosmic-orange.webp">
+                            <div class="color-preview" style="background: linear-gradient(135deg, #e47507, #e47507);"></div>
+                            <div class="color-name">Cosmic Orange</div>
+                        </div>
+                        <div class="color-btn" data-color="blue" data-image="images/deep-blue.webp">
+                            <div class="color-preview" style="background: linear-gradient(135deg, #185f8b, #185f8b);"></div>
+                            <div class="color-name">Deep Blue</div>
+                        </div>
+                        <div class="color-btn" data-color="white" data-image="images/silver.webp">
+                            <div class="color-preview" style="background: linear-gradient(135deg, #E8E8E8, #F5F5F7);"></div>
+                            <div class="color-name">Silver</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Specs Section -->
+    <section id="specs" class="specs fade-in">
+        <div class="container">
+            <div class="section-header">
+                <h2>Technical Specifications</h2>
+                <p>Unmatched performance and innovation in every detail</p>
+            </div>
+            <div class="specs-grid">
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h4>A19 Pro Chip</h4>
+                    <p>Next-generation 3nm processor with <span class="spec-highlight">8-core CPU</span> and <span class="spec-highlight">10-core GPU</span>. Delivers up to <span class="spec-highlight">40% faster performance</span> and <span class="spec-highlight">30% better energy efficiency</span> than previous generation.</p>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h4>Pro Camera System</h4>
+                    <p><span class="spec-highlight">48MP Main camera</span> with sensor-shift stabilization, <span class="spec-highlight">12MP Ultra Wide</span>, and <span class="spec-highlight">12MP Telephoto</span> with <span class="spec-highlight">5x optical zoom</span>. New Photonic Engine for incredible low-light performance.</p>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h4>Super Retina XDR Display</h4>
+                    <p><span class="spec-highlight">6.9-inch OLED</span> with ProMotion technology, <span class="spec-highlight">120Hz refresh rate</span>, and <span class="spec-highlight">Always-On display</span>. Peak brightness of <span class="spec-highlight">2,500 nits</span> for HDR content.</p>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-battery-full"></i>
+                    </div>
+                    <h4>All-Day Battery Life</h4>
+                    <p>Up to <span class="spec-highlight">30 hours</span> of video playback. <span class="spec-highlight">Fast charging</span> with 50% charge in just 25 minutes. <span class="spec-highlight">MagSafe</span> and <span class="spec-highlight">Qi2 wireless charging</span> support.</p>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Durable Design</h4>
+                    <p><span class="spec-highlight">Aerospace-grade titanium</span> frame with <span class="spec-highlight">Ceramic Shield</span> front. <span class="spec-highlight">IP68 rating</span> for water and dust resistance. Four stunning finishes.</p>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>5G & Connectivity</h4>
+                    <p>Advanced <span class="spec-highlight">5G technology</span> with more bands than any other smartphone. <span class="spec-highlight">Wi-Fi 7</span> support, <span class="spec-highlight">Bluetooth 5.4</span>, and <span class="spec-highlight">Ultra Wideband chip</span> for spatial awareness.</p>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-memory"></i>
+                    </div>
+                    <h4>Storage Options</h4>
+                    <p><span class="spec-highlight">256GB</span>, <span class="spec-highlight">512GB</span>, <span class="spec-highlight">1TB</span>, and new <span class="spec-highlight">2TB</span> storage options. <span class="spec-highlight">NVMe technology</span> for lightning-fast data transfer.</p>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-os"></i>
+                    </div>
+                    <h4>iOS 18</h4>
+                    <p>Powered by <span class="spec-highlight">iOS 18</span> with enhanced privacy features, <span class="spec-highlight">revamped Siri</span>, and <span class="spec-highlight">AI-powered capabilities</span>. Seamless integration with Apple ecosystem.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="fade-in">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fab fa-apple me-2"></i>iPhone 17 Pro Max
+                </div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Sales and Refunds</a>
+                    <a href="#">Legal</a>
+                    <a href="#">Site Map</a>
+                </div>
+                <div class="copyright">
+                    Copyright © 2025 Apple Inc. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Navbar background transition when scrolling
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Fade-in elements when visible
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Carousel auto-advance
+        const myCarousel = document.getElementById('iphoneCarousel');
+        if (myCarousel) {
+            const carousel = new bootstrap.Carousel(myCarousel, {
+                interval: 4000,
+                wrap: true
+            });
+        }
+
+        // Color Selector Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const colorButtons = document.querySelectorAll('.color-btn');
+            const colorImage = document.getElementById('color-image');
+            
+            colorButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    colorButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get the image URL from data attribute
+                    const imageUrl = this.getAttribute('data-image');
+                    
+                    // Update the image with a fade effect
+                    colorImage.style.opacity = 0;
+                    setTimeout(() => {
+                        colorImage.src = imageUrl;
+                        colorImage.style.opacity = 1;
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
